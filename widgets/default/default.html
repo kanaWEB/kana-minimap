@@ -1,0 +1,11 @@
+<div style="position:absolute;width:100px;left:{$sensor.left}px;top:{$sensor.top}px" id="sensor_{$sensor.uid}" class="minimap-widgets col-md-2 border-circled draggy bg-{$sensor.sensor_battery_class}">
+	<img src="{$sensor.icon}">
+	
+		<b id="sensor_lastvalue_{$sensor.uid}">
+			{$sensor.sensor_lastvalue}
+		</b>
+	
+	<div id="sensor_timestamp_{$sensor.uid}" class="text-center">
+		{$sensor.sensor_timestamp|Functions::time_since_smaller}
+	</div>
+</div>

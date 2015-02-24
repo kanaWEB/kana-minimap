@@ -1,0 +1,37 @@
+<?php
+$sensors = Variable::sensors_to_websensors();
+$config_file = CONFIG_DIR."views/".$_["view"].".json";
+if(file_exists($config_file)){
+	$json_config = file_get_contents($config_file);
+	//var_dump($json_config);
+	$config = json_decode($json_config);
+	//var_dump($config);
+}
+if($sensors){
+		//Functions::pretty_debug($sensors);
+}
+
+$dynamic_js[] = USER_VIEWS."minimap/js/minimap.js";
+$tpl->assign("sensor_position",$config);
+?>
+<img id="minimap-image" src='cache/minimap.png'>
+
+<div class="row">
+	<h1>Sensors</h1>
+	<?
+	foreach($sensors as $sensor){
+		$key = "sensor_".$sensor["uid"];
+		$sensor["top"] = $config->$key->top;
+		$sensor["left"] = $config->$key->left;
+		$tpl->assign("sensor",$sensor);
+		$tpl->draw(USER_VIEWS."minimap/widgets/default/default");
+	}
+	?>
+</div>
+
+
+
+
+
+
+

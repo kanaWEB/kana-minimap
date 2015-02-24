@@ -1,0 +1,1 @@
+minimap,house,house plan,map,sensors
