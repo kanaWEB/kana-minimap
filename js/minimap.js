@@ -66,3 +66,5 @@ function refresh_minimap(){
 			})
 	});
 }
+
+
