@@ -1,3 +1,3 @@
 <?php
-$lang["Minimap"] = "Minicarte";
-?>
+
+$lang['Minimap'] = 'Minicarte';
