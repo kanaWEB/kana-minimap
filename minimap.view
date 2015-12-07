@@ -1,51 +1,55 @@
 <?php
 $sensors = Variable::sensors_to_websensors();
 $config_file = CONFIG_DIR."views/".$_["view"].".json";
-if(file_exists($config_file)){
-	$json_config = file_get_contents($config_file);
-	//var_dump($json_config);
-	$config = json_decode($json_config);
-	//var_dump($config);
+if (file_exists($config_file)) {
+    $json_config = file_get_contents($config_file);
+    //var_dump($json_config);
+    $config = json_decode($json_config);
+    //var_dump($config);
 }
-if($sensors){
-		//Functions::pretty_debug($sensors);
+if ($sensors) {
+        //Functions::pretty_debug($sensors);
 }
 
-if (file_exists(CONFIG_DIR."views/minimap.png")){
-	$base64 = Functions::ext_image_base64("views/minimap");
+if (file_exists(CONFIG_DIR."views/minimap.png")) {
+    $base64 = Functions::ext_image_base64("views/minimap");
+} else {
+    $base64 = "";
 }
 
 $dynamic_js[] = USER_VIEWS."minimap/js/minimap.js";
 $dynamic_js[] = EXTERNAL_LIB."dropzone/dropzone.js";
-$tpl->assign("sensor_position",$config);
+$tpl->assign("sensor_position", $config);
 ?>
 
 <div class="container">
-	<div class="row">
-		<img id="minimap-image" src='data:image/png;base64,<?php echo $base64 ?>' >
+    <div class="row">
+        <img id="minimap-image" src='data:image/png;base64,<?php echo $base64 ?>' >
 
-		<form action="actions.php?type=imageupload&view=minimap" id="imageupload" class="btn btn-primary dropzone">
-			<div class="dz-message">
-				<h1>Drop Image Here</h1>
-			</div>
+        <form action="actions.php?type=imageupload&view=minimap" id="imageupload" class="btn btn-primary dropzone">
+            <div class="dz-message">
+                <h1>Drop Image Here</h1>
+            </div>
 
-			<div class="fallback">
-				<input name="file" type="file" multiple />
-			</div>
-		</form>
+            <div class="fallback">
+                <input name="file" type="file" multiple />
+            </div>
+        </form>
 
-		<h1>Sensors</h1>
-		<?
-		foreach($sensors as $sensor){
-			$key = "sensor_".$sensor["uid"];
-			$sensor["top"] = $config->$key->top;
-			$sensor["left"] = $config->$key->left;
-			$tpl->assign("sensor",$sensor);
-			$tpl->draw(USER_VIEWS."minimap/widgets/default/default");
-		}
-		?>
+        <h1>Sensors</h1>
+        <?php
+        if ($sensors) {
+            foreach ($sensors as $sensor) {
+                $key = "sensor_".$sensor["uid"];
+                $sensor["top"] = $config->$key->top;
+                $sensor["left"] = $config->$key->left;
+                $tpl->assign("sensor", $sensor);
+                $tpl->draw(USER_VIEWS."minimap/widgets/default/default");
+            }
+        }
+        ?>
 
-	</div>
+    </div>
 </div>
 
 
